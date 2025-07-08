@@ -1,4 +1,4 @@
-
+/* Damage Classifier Styles */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -33,12 +33,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .header-content {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .header-icon {
@@ -56,6 +64,22 @@
 .header-subtitle {
   font-size: 0.875rem;
   color: #6b7280;
+}
+
+.view-products-button {
+  padding: 0.5rem 1rem;
+  background-color: #facc15;
+  color: #1f2937;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-products-button:hover {
+  background-color: #eab308;
 }
 
 .upload-container {
@@ -250,12 +274,14 @@
 
 .action-container {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.reset-button {
+.reset-button, .add-product-button {
   padding: 0.5rem 1rem;
-  background-color: #1e40af;
-  color: #ffffff;
   border-radius: 0.5rem;
   font-size: 1rem;
   font-weight: 500;
@@ -264,10 +290,20 @@
   transition: background-color 0.3s ease;
 }
 
+.reset-button {
+  background-color: #1e40af;
+  color: #ffffff;
+}
+
 .reset-button:hover {
   background-color: #1e3a8a;
 }
 
-.fade-in {
-  animation: fadeIn 0.5s ease-out;
+.add-product-button {
+  background-color: #22c55e;
+  color: #ffffff;
+}
+
+.add-product-button:hover {
+  background-color: #16a34a;
 }

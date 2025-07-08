@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as tf from '@tensorflow/tfjs';
 import './DamageClassifier.css';
 
@@ -9,6 +10,7 @@ export default function DamageClassifier() {
   const [imageURL, setImageURL] = useState(null);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadModel = async () => {
@@ -49,11 +51,24 @@ export default function DamageClassifier() {
 
         const prediction = await model.predict(tensor).data();
         const maxIdx = prediction.indexOf(Math.max(...prediction));
+        const confidence = (prediction[maxIdx] * 100).toFixed(2);
+
+        // Dynamic discount logic
+        let discount;
+        if (LABELS[maxIdx] === "Slight") {
+          // Discount ranges from 5% (confidence 50%) to 20% (confidence 100%)
+          discount = 5 + (confidence - 50) * (15 / 50);
+        } else {
+          // Discount ranges from 25% (confidence 50%) to 50% (confidence 100%)
+          discount = 25 + (confidence - 50) * (25 / 50);
+        }
+        discount = Math.min(Math.max(discount, 5), 50).toFixed(2); // Clamp between 5% and 50%
 
         setResult({
           label: LABELS[maxIdx],
-          confidence: (prediction[maxIdx] * 100).toFixed(2),
-          discount: LABELS[maxIdx] === "Slight" ? "15%" : "50%",
+          confidence,
+          discount: `${discount}%`,
+          imageURL: url,
         });
       } catch (error) {
         console.error("Error classifying image:", error);
@@ -67,10 +82,27 @@ export default function DamageClassifier() {
     };
   };
 
+  const handleAddProduct = () => {
+    if (!result) return;
+    const products = JSON.parse(localStorage.getItem('products') || '[]');
+    const newProduct = {
+      id: Date.now(),
+      imageURL: result.imageURL,
+      label: result.label,
+      confidence: result.confidence,
+      discount: result.discount,
+      timestamp: new Date().toISOString(),
+    };
+    products.push(newProduct);
+    localStorage.setItem('products', JSON.stringify(products));
+    alert('Product added successfully!');
+    setImageURL(null);
+    setResult(null);
+  };
+
   return (
     <div className="damage-classifier-container">
       <div className="damage-classifier-card">
-        {/* Header */}
         <div className="header">
           <div className="header-content">
             <svg className="header-icon" fill="currentColor" viewBox="0 0 24 24">
@@ -78,10 +110,17 @@ export default function DamageClassifier() {
             </svg>
             <h1 className="header-title">Walmart Damage Classifier</h1>
           </div>
-          <span className="header-subtitle">Powered by AI</span>
+          <div className="header-actions">
+            <span className="header-subtitle">Powered by AI</span>
+            <button
+              onClick={() => navigate('/products')}
+              className="view-products-button"
+            >
+              View Products
+            </button>
+          </div>
         </div>
 
-        {/* File Upload */}
         <div className="upload-container">
           <input
             type="file"
@@ -98,7 +137,6 @@ export default function DamageClassifier() {
           </div>
         </div>
 
-        {/* Image Preview */}
         {imageURL && (
           <div className="preview-container fade-in">
             <h2 className="preview-title">Preview</h2>
@@ -110,7 +148,6 @@ export default function DamageClassifier() {
           </div>
         )}
 
-        {/* Loading State */}
         {loading && (
           <div className="loading-container fade-in">
             <div className="spinner"></div>
@@ -118,7 +155,6 @@ export default function DamageClassifier() {
           </div>
         )}
 
-        {/* Result Display */}
         {result && (
           <div className="result-container fade-in">
             <h2 className="result-title">Analysis Result</h2>
@@ -147,6 +183,12 @@ export default function DamageClassifier() {
               </span>
             </div>
             <div className="action-container">
+              <button
+                onClick={handleAddProduct}
+                className="add-product-button"
+              >
+                Add Product
+              </button>
               <button
                 onClick={() => setImageURL(null)}
                 className="reset-button"
