@@ -13,22 +13,6 @@ export default function ClientView() {
 
   return (
     <div className="client-view-container">
-      <header className="client-view-header">
-        <div className="header-content">
-          <img
-            src={process.env.PUBLIC_URL + '/walmart-logo.svg'}
-            alt="Walmart Logo"
-            className="walmart-logo"
-          />
-          <h1 className="header-title">Eco-Saver Mode Products</h1>
-        </div>
-        <button
-          onClick={() => navigate('/products')}
-          className="back-button"
-        >
-          Back to Product List
-        </button>
-      </header>
       <main className="client-view-main">
         <div className="headings">
           <h1 className="heading-text">Save More with Eco-Saver Mode</h1>
@@ -45,7 +29,7 @@ export default function ClientView() {
           <div className="products-grid">
             {products.map(product => (
               <div key={product.id} className="card">
-                <button className="points-button">{product.points} pts</button>
+                <div className="points-button">{product.points} pts</div>
                 <img
                   src={product.imageURL}
                   alt={product.name}

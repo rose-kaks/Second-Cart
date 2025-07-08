@@ -1,0 +1,263 @@
+/* Header Styles */
+.static-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 999;
+  background-color: #238b45;
+}
+
+.header {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.walmart-logo-text {
+  font-family: 'Arial', 'Helvetica', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  font-style: italic;
+  color: #fcce0d;
+  text-decoration: none;
+  position: relative;
+  padding: 0.25rem 0.5rem;
+  background: linear-gradient(90deg, #fcce0d, #f4c430);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: transform 0.3s ease;
+}
+
+.walmart-logo-text::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, #fcce0d 0%, rgba(255, 255, 255, 0) 70%);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  transform: rotate(45deg);
+}
+
+.walmart-logo-text:hover {
+  transform: scale(1.1);
+}
+
+.blue-button {
+  background-color: #005a32;
+  height: 42px;
+  max-width: 300px;
+  flex: 1 1 auto;
+  border-radius: 20px;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+}
+
+.blue-button p {
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0;
+  color: #ffffff;
+}
+
+.blue-button button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.blue-button button:hover {
+  background: #003d23;
+}
+
+.blue-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.change-page button {
+  width: 100px;
+  height: 42px;
+  border-radius: 20px;
+  background-color: #0072ce;
+  color: #f7fcf5;
+  font-size: medium;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.change-page button:hover {
+  background-color: #005bb5;
+}
+
+.search-bar {
+  flex: 2 1 300px;
+  max-width: 650px;
+}
+
+.search-bar form {
+  height: 42px;
+  background-color: #f0f4f8;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0 20px;
+  font-size: 1rem;
+  height: 100%;
+  border-radius: 20px 0 0 20px;
+  background: transparent;
+}
+
+#clear-button,
+#search-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+/* #search-button {
+  border-radius: 0 20px 20px 0;
+  background: #0071ce;
+  transition: background-color 0.3s ease;
+}
+
+#search-button:hover {
+  background: #005bb5;
+} */
+
+#clear-button svg,
+#search-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.account-and-cart {
+  flex: 1 1 300px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.account-and-cart ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 30px;
+}
+
+#group1, #group2, #group3 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #ffb81c;
+}
+
+#reorder-my-items, #sign-in, #my-cart {
+  flex-direction: column;
+  font-size: larger;
+  text-align: center;
+}
+
+#group3 {
+  padding-right: 20px;
+}
+
+.account-and-cart svg {
+  width: 20px;
+  height: 20px;
+}
+
+.account-and-cart li:hover {
+  color: #ffcc4d;
+}
+
+.menu-bar {
+  background-color: #a1d99b;
+  height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.nav-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dept-services ul,
+.nav-content ul {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dept-services li,
+.nav-content li {
+  font-size: 0.9rem;
+  color: #ffffff;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.dept-services li:hover,
+.nav-content li:hover {
+  color: #ffeb99;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    height: auto;
+    padding: 10px 0;
+  }
+  .search-bar {
+    width: 100%;
+    margin: 10px 0;
+  }
+  .blue-button {
+    width: 100%;
+    margin: 10px 0;
+  }
+  .change-page {
+    width: 100%;
+    margin: 10px 0;
+  }
+  .account-and-cart {
+    width: 100%;
+    justify-content: center;
+  }
+}
