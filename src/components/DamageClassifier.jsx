@@ -52,17 +52,11 @@ export default function DamageClassifier() {
         const prediction = await model.predict(tensor).data();
         const maxIdx = prediction.indexOf(Math.max(...prediction));
         const confidence = (prediction[maxIdx] * 100).toFixed(2);
+        const p_slight = LABELS[maxIdx] === "Slight" ? prediction[maxIdx] : 1 - prediction[maxIdx];
+        const p_severe = 1 - p_slight;
 
-        // Dynamic discount logic
-        let discount;
-        if (LABELS[maxIdx] === "Slight") {
-          // Discount ranges from 5% (confidence 50%) to 20% (confidence 100%)
-          discount = 5 + (confidence - 50) * (15 / 50);
-        } else {
-          // Discount ranges from 25% (confidence 50%) to 50% (confidence 100%)
-          discount = 25 + (confidence - 50) * (25 / 50);
-        }
-        discount = Math.min(Math.max(discount, 5), 50).toFixed(2); // Clamp between 5% and 50%
+        // Dynamic discount logic: weighted average based on probabilities
+        const discount = (p_slight * 5 + p_severe * 50).toFixed(2);
 
         setResult({
           label: LABELS[maxIdx],
