@@ -4,21 +4,32 @@ import * as tf from '@tensorflow/tfjs';
 import './DamageClassifier.css';
 
 const LABELS = ["Slight", "Severe"];
+const CATEGORIES = ["Electronics", "Clothing", "Home & Garden", "Toys", "Books", "Other"];
 
 export default function DamageClassifier() {
   const [model, setModel] = useState(null);
   const [imageURL, setImageURL] = useState(null);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [productDetails, setProductDetails] = useState({
+    name: '',
+    category: '',
+    price: ''
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
     const loadModel = async () => {
       try {
-        const loadedModel = await tf.loadLayersModel("/model/model.json");
+        const modelPath = process.env.PUBLIC_URL + '/model/model.json';
+        const loadedModel = await tf.loadLayersModel(modelPath);
         setModel(loadedModel);
+        setError(null);
       } catch (error) {
         console.error("Error loading model:", error);
+        setError("Failed to load the classification model. Please try again later.");
       }
     };
     loadModel();
@@ -30,11 +41,18 @@ export default function DamageClassifier() {
     const url = URL.createObjectURL(file);
     setImageURL(url);
     setResult(null);
+    setError(null);
+    setShowModal(false);
+    setProductDetails({ name: '', category: '', price: '' });
     setTimeout(() => classifyImage(url), 100);
   };
 
   const classifyImage = async (url) => {
-    if (!model) return;
+    if (!model) {
+      setError("Model not loaded. Please try again.");
+      setLoading(false);
+      return;
+    }
     setLoading(true);
 
     const img = new Image();
@@ -55,36 +73,54 @@ export default function DamageClassifier() {
         const p_slight = LABELS[maxIdx] === "Slight" ? prediction[maxIdx] : 1 - prediction[maxIdx];
         const p_severe = 1 - p_slight;
 
-        // Dynamic discount logic: weighted average based on probabilities
-        const discount = (p_slight * 5 + p_severe * 50).toFixed(2);
+        // Points logic: weighted average based on probabilities
+        const points = Math.round(Math.min(Math.max(p_slight * 50 + p_severe * 500, 50), 500));
 
         setResult({
           label: LABELS[maxIdx],
           confidence,
-          discount: `${discount}%`,
+          points,
           imageURL: url,
         });
+        setError(null);
       } catch (error) {
         console.error("Error classifying image:", error);
+        setError("Failed to classify the image. Please try again.");
       } finally {
         setLoading(false);
       }
     };
     img.onerror = () => {
       setLoading(false);
-      console.error("Error loading image");
+      setError("Error loading image. Please upload a valid image.");
     };
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProductDetails(prev => ({ ...prev, [name]: value }));
+  };
+
   const handleAddProduct = () => {
-    if (!result) return;
+    if (!result || !productDetails.name || !productDetails.category || !productDetails.price) {
+      alert('Please fill out all product details.');
+      return;
+    }
+    if (isNaN(productDetails.price) || productDetails.price <= 0) {
+      alert('Please enter a valid price.');
+      return;
+    }
+
     const products = JSON.parse(localStorage.getItem('products') || '[]');
     const newProduct = {
       id: Date.now(),
       imageURL: result.imageURL,
       label: result.label,
       confidence: result.confidence,
-      discount: result.discount,
+      points: result.points,
+      name: productDetails.name,
+      category: productDetails.category,
+      price: parseFloat(productDetails.price).toFixed(2),
       timestamp: new Date().toISOString(),
     };
     products.push(newProduct);
@@ -92,6 +128,8 @@ export default function DamageClassifier() {
     alert('Product added successfully!');
     setImageURL(null);
     setResult(null);
+    setShowModal(false);
+    setProductDetails({ name: '', category: '', price: '' });
   };
 
   return (
@@ -114,6 +152,12 @@ export default function DamageClassifier() {
             </button>
           </div>
         </div>
+
+        {error && (
+          <div className="error-container fade-in">
+            <p className="error-text">{error}</p>
+          </div>
+        )}
 
         <div className="upload-container">
           <input
@@ -173,22 +217,92 @@ export default function DamageClassifier() {
             </div>
             <div className="discount-container">
               <span className="discount-text">
-                Suggested Discount: {result.discount}
+                Points Awarded: {result.points}
               </span>
             </div>
             <div className="action-container">
               <button
-                onClick={handleAddProduct}
+                onClick={() => setShowModal(true)}
                 className="add-product-button"
               >
                 Add Product
               </button>
               <button
-                onClick={() => setImageURL(null)}
+                onClick={() => {
+                  setImageURL(null);
+                  setResult(null);
+                  setShowModal(false);
+                  setProductDetails({ name: '', category: '', price: '' });
+                }}
                 className="reset-button"
               >
                 Upload Another Image
               </button>
+            </div>
+          </div>
+        )}
+
+        {showModal && (
+          <div className="modal-overlay">
+            <div className="modal-content fade-in">
+              <h2 className="modal-title">Enter Product Details</h2>
+              <div className="modal-form">
+                <div className="form-group">
+                  <label htmlFor="name">Product Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={productDetails.name}
+                    onChange={handleInputChange}
+                    placeholder="Enter product name"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="category">Category</label>
+                  <select
+                    id="category"
+                    name="category"
+                    value={productDetails.category}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Select a category</option>
+                    {CATEGORIES.map(cat => (
+                      <option key={cat} value={cat}>{cat}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="price">Price ($)</label>
+                  <input
+                    type="number"
+                    id="price"
+                    name="price"
+                    value={productDetails.price}
+                    onChange={handleInputChange}
+                    placeholder="Enter price"
+                    min="0"
+                    step="0.01"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="modal-actions">
+                <button
+                  onClick={handleAddProduct}
+                  className="modal-submit-button"
+                >
+                  Submit
+                </button>
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="modal-cancel-button"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         )}

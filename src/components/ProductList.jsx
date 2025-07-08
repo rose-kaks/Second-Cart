@@ -45,9 +45,12 @@ export default function ProductList() {
               <thead>
                 <tr>
                   <th>Image</th>
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th>Price ($)</th>
                   <th>Damage</th>
                   <th>Confidence</th>
-                  <th>Discount</th>
+                  <th>Points</th>
                   <th>Date</th>
                   <th>Actions</th>
                 </tr>
@@ -58,13 +61,16 @@ export default function ProductList() {
                     <td>
                       <img
                         src={product.imageURL}
-                        alt="Product"
+                        alt={product.name}
                         className="product-image"
                       />
                     </td>
+                    <td>{product.name}</td>
+                    <td>{product.category}</td>
+                    <td>{product.price}</td>
                     <td>{product.label}</td>
                     <td>{product.confidence}%</td>
-                    <td>{product.discount}</td>
+                    <td>{product.points}</td>
                     <td>{new Date(product.timestamp).toLocaleDateString()}</td>
                     <td>
                       <button
