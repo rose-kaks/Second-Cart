@@ -40,51 +40,61 @@ export default function ProductList() {
             <p className="empty-text">No products classified yet.</p>
           </div>
         ) : (
-          <div className="table-container">
-            <table className="product-table">
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>Category</th>
-                  <th>Price ($)</th>
-                  <th>Damage</th>
-                  <th>Confidence</th>
-                  <th>Points</th>
-                  <th>Date</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {products.map(product => (
-                  <tr key={product.id}>
-                    <td>
-                      <img
-                        src={product.imageURL}
-                        alt={product.name}
-                        className="product-image"
-                      />
-                    </td>
-                    <td>{product.name}</td>
-                    <td>{product.category}</td>
-                    <td>{product.price}</td>
-                    <td>{product.label}</td>
-                    <td>{product.confidence}%</td>
-                    <td>{product.points}</td>
-                    <td>{new Date(product.timestamp).toLocaleDateString()}</td>
-                    <td>
-                      <button
-                        onClick={() => handleDeleteProduct(product.id)}
-                        className="delete-button"
-                      >
-                        Delete
-                      </button>
-                    </td>
+          <>
+            <div className="table-container">
+              <table className="product-table">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price ($)</th>
+                    <th>Damage</th>
+                    <th>Confidence</th>
+                    <th>Points</th>
+                    <th>Date</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {products.map(product => (
+                    <tr key={product.id}>
+                      <td>
+                        <img
+                          src={product.imageURL}
+                          alt={product.name}
+                          className="product-image"
+                        />
+                      </td>
+                      <td>{product.name}</td>
+                      <td>{product.category}</td>
+                      <td>{product.price}</td>
+                      <td>{product.label}</td>
+                      <td>{product.confidence}%</td>
+                      <td>{product.points}</td>
+                      <td>{new Date(product.timestamp).toLocaleDateString()}</td>
+                      <td>
+                        <button
+                          onClick={() => handleDeleteProduct(product.id)}
+                          className="delete-button"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="client-view-button-container">
+              <button
+                onClick={() => navigate('/client-view')}
+                className="client-view-button"
+              >
+                Show Client View
+              </button>
+            </div>
+          </>
         )}
       </div>
     </div>
