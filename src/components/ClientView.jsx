@@ -15,10 +15,12 @@ export default function ClientView() {
     <div className="client-view-container">
       <main className="client-view-main">
         <div className="headings">
-          <h1 className="heading-text">Save More with Eco-Saver Mode</h1>
+          <h1 className="heading-text">♻️ Welcome to SecondCart: Smart. Sustainable. Savvy.</h1>
           <h3 className="heading-caption">
-            Discover great deals on gently used products. Earn points with every purchase!
+            Why pay more for perfection? Rescue quality items with minor flaws, unlock exclusive discounts, and earn rewards for shopping sustainably.  
+            Join the reCommerce revolution — where every dent tells a story worth saving.
           </h3>
+
         </div>
         <hr />
         {products.length === 0 ? (
