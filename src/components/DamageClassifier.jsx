@@ -105,7 +105,7 @@ export default function DamageClassifier() {
             <h1 className="header-title">Walmart Damage Classifier</h1>
           </div>
           <div className="header-actions">
-            <span className="header-subtitle">Powered by AI</span>
+            <span className="header-subtitle">Powered by TEAM</span>
             <button
               onClick={() => navigate('/products')}
               className="view-products-button"
