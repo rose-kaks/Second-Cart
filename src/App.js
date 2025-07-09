@@ -23,7 +23,7 @@ import ClientView from './components/ClientView';
 // export default App;
 function App() {
   return (
-    <BrowserRouter basename="/">
+    <BrowserRouter basename="/second-cart">
       <Header />
       <div className="content-wrapper">
         <Routes>
