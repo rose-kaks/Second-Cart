@@ -1,70 +1,72 @@
-# Getting Started with Create React App
+# 🛒 SecondCart – Sustainable Resale Powered by AI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**SecondCart** is an AI-powered resale mode for slightly damaged or returned-but-usable products.  
+It promotes zero-waste retail by classifying product damage and rewarding eco-conscious buyers with **redeemable points** — encouraging repeat sustainable shopping.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+- ♿ **Accessibility-First UI**  
+  Supports dark mode, text resizing, and voice search to ensure inclusive shopping for all users.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 🧠 **AI-Based Damage Detection**  
+  - Custom dataset of real-world product images  
+  - Trained using **Teachable Machine** with **MobileNetV1** + shallow dense layers  
+  - Damage levels: `Slight` and `Severe`  
+  - Deployed using **TensorFlow.js** for real-time browser inference
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- 🌱 **Reward Points System**  
+  - Each classified product shows the eco-points it earns  
+  - Points can be redeemed on future purchases  
+  - Encourages repeat eco-conscious buying behavior
 
-### `npm test`
+- ⚛️ **Frontend-Only Prototype**  
+  - Built entirely using **React.js**  
+  - Lightweight and fast  
+  - Ideal for demos and PWA-like performance
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🧰 Tech Stack
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+| Layer         | Tools                            |
+|---------------|----------------------------------|
+| Frontend      | React.js, HTML, CSS, JavaScript  |
+| ML Model      | Teachable Machine (MobileNetV1)  |
+| Deployment    | TensorFlow.js                    |
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🎬 How It Works
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. User uploads or captures a product image  
+2. AI model classifies it as **Slight** or **Severe Damage**  
+3. System assigns **reward-points** accordingly  
+4. Product added to cart with reward tag  
+5. Points are stored for redemption on future purchases
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🌍 Impact
 
-## Learn More
+- Reduces retail waste by reselling returned-but-usable items
+- Promotes sustainable habits through gamified eco-points
+- Expands Walmart’s accessibility and sustainability goals
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🙌 Team
+Built with 💚 by **Team GreenTale**
+(Part of Walmart Sparkathon 2024)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
+## 🛠 Run Locally
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+git clone https://github.com/rose-kaks/Second-Cart.git
+cd Second-Cart
+npm install
+npm start
