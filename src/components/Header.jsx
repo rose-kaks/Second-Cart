@@ -8,9 +8,9 @@ const Header = () => {
   return (
     <header className="static-header">
       <div className="header">
-        <a href="#" className="walmart-logo-text">
-          Walmart
-        </a>
+        {/* <a href="#" className="walmart-logo-text">
+          // {/* Walmart }
+        </a> */}
         <section className="location-set">
           <div className="blue-button">
             <button>
