@@ -1,4 +1,5 @@
 # 🛒 SecondCart – Sustainable Resale Powered by AI
+📽️👉 [Watch the demo here](https://youtu.be/35cEWb6AMso?feature=shared)
 
 **SecondCart** is an AI-powered resale mode for slightly damaged or returned-but-usable products.  
 It promotes zero-waste retail by classifying product damage and rewarding eco-conscious buyers with **redeemable points** — encouraging repeat sustainable shopping.
